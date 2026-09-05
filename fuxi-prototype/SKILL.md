@@ -22,15 +22,14 @@ node <skillDir>/scripts/build-capability-cache.cjs check <skillDir>
 
 ## MCP Onboarding Prerequisite
 
-If Fuxi MCP tools are unavailable, stop the MCP workflow at that boundary. Use the platform-generated onboarding prompt and the AI host's native HTTP, shell, or Node.js capability to save its `bootstrapManifest`, download the two artifacts once, extract the MCP ZIP, and run the bundled setup CLI:
+If Fuxi MCP tools are unavailable, stop the MCP workflow at that boundary. Use the platform-generated onboarding prompt and the AI host's native HTTP, shell, or Node.js capability to save its `bootstrapManifest`, download and extract only the MCP ZIP needed to obtain `bootstrap.js`, then run the bundled setup CLI as the single installation entry point:
 
 ```text
-node <mcp-package>/src/bootstrap.js preflight --manifest <absolute-manifest-path> --mcp-config <absolute-client-config> --skill-target <absolute-skill-target>
-node <mcp-package>/src/bootstrap.js install --manifest <absolute-manifest-path> --mcp-config <absolute-client-config> --skill-target <absolute-skill-target> --mcp-zip <absolute-mcp-zip> --skill-zip <absolute-skill-zip>
+node <mcp-package>/src/bootstrap.js install --manifest <absolute-manifest-path> --client <client-name> --mcp-config <absolute-client-config> --skill-target <absolute-skill-target> --mcp-zip <absolute-mcp-zip> --cleanup-manifest
 ```
 
 `absolute-skill-target` is the final `fuxi-prototype` directory itself, not its parent directory.
-Do not claim installation or invoke Fuxi MCP tools before the commands return success. Restart or reload the AI client, then call `check_connection({})` and continue only when `ok=true` and `authentication=verified`. `bootstrap.js` is a deterministic setup CLI shipped inside the MCP package; it is not an MCP tool and does not add a Fuxi desktop client.
+The installer validates the local MCP ZIP, downloads and validates the Skill ZIP, performs backup, configuration, idempotence, locking, and the first MCP self-test. Do not manually download the Skill ZIP, repeat install substeps, or run a separate preflight. Treat `status=COMPLETE` with `mcpConnected=true` and `skillReady=true`, or `reason=ALREADY_COMPLETE`, as the only installation success. Do not claim installation or invoke Fuxi MCP tools before the command returns success. Restart or reload the AI client once, then call `check_connection({})` once and continue only when `ok=true` and `authentication=verified`. `bootstrap.js` is a deterministic setup CLI shipped inside the MCP package; it is not an MCP tool and does not add a Fuxi desktop client.
 
 ## Read Required References
 

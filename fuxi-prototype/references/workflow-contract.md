@@ -16,12 +16,11 @@ Do not skip forward after a failed state. `local-only` ends after `VALIDATE`. A 
 When Fuxi MCP tools are not available, do not call them, emulate them, or report a connection that was not verified. Follow the platform-generated onboarding prompt with the AI host's native HTTP, shell, or Node.js capability:
 
 1. Save the returned `bootstrapManifest` as a temporary file with an absolute path.
-2. Download the MCP ZIP and Skill ZIP using the manifest's URLs and `installToken`.
-3. Extract the MCP ZIP, then run its bundled `bootstrap.js`:
-   `node <mcp-package>/src/bootstrap.js preflight --manifest <absolute-manifest-path> --mcp-config <absolute-client-config> --skill-target <absolute-skill-target>`
-4. If preflight passes, run `install` with the already downloaded ZIP paths so the artifacts are not downloaded twice:
-   `node <mcp-package>/src/bootstrap.js install --manifest <absolute-manifest-path> --mcp-config <absolute-client-config> --skill-target <absolute-skill-target> --mcp-zip <absolute-mcp-zip> --skill-zip <absolute-skill-zip>`
-5. Restart or reload the selected AI client. Only then call `check_connection({})` and require `authentication=verified`.
+2. Download the MCP ZIP once and extract it only far enough to run its bundled `bootstrap.js`; do not download or extract the Skill ZIP manually.
+3. Run the bundled setup CLI as the single installation entry point; it validates the local MCP ZIP, downloads the Skill ZIP, performs preflight, backup, configuration, idempotence, locking, and the first MCP self-test:
+   `node <mcp-package>/src/bootstrap.js install --manifest <absolute-manifest-path> --client <client-name> --mcp-config <absolute-client-config> --skill-target <absolute-skill-target> --mcp-zip <absolute-mcp-zip> --cleanup-manifest`
+4. Do not repeat the install substeps. Accept only `status=COMPLETE` with `mcpConnected=true` and `skillReady=true`, or an idempotent `reason=ALREADY_COMPLETE` result.
+5. Restart or reload the selected AI client once. Only then call `check_connection({})` once and require `authentication=verified`.
 
 The bundled runner backs up existing configuration, preserves other MCP entries, validates artifact structure and optional SHA-256/size fields, performs one MCP self-test, removes the one-time connect code from persistent configuration, and writes a machine-readable state file. It is a setup CLI, not an MCP tool and not a Fuxi desktop client.
 
