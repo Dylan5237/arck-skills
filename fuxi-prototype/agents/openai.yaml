@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fuxi Prototype"
+  short_description: "Generate, validate, and deliver Fuxi prototypes"
+  default_prompt: "Use $fuxi-prototype to create or update a Fuxi prototype with the appropriate specification and runtime profile."

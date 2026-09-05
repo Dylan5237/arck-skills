@@ -1,0 +1,737 @@
+{
+  "schema": "fuxi-mcp-tools/1",
+  "tools": [
+    {
+      "name": "check_connection",
+      "description": "Check whether the Fuxi backend is reachable.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_prototypes",
+      "description": "List prototypes accessible to the configured Fuxi account.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "my",
+              "shared",
+              "all"
+            ]
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_prototype",
+      "description": "Create a Fuxi prototype record.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_prototype",
+      "description": "Read one prototype detail, including file tree metadata.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_readme",
+      "description": "Read the README extracted for a prototype.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_preview_url",
+      "description": "Create or reuse a browser-ready share URL for a prototype preview.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "entryFile": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "upload_zip",
+      "description": "Upload an existing ZIP file to a Fuxi prototype as a new version.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "zipPath",
+          "versionNote"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "zipPath": {
+            "type": "string"
+          },
+          "versionNote": {
+            "type": "string"
+          },
+          "versionType": {
+            "type": "string",
+            "enum": [
+              "major",
+              "minor",
+              "patch"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_projects",
+      "description": "List projects accessible to the configured Fuxi account.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_project",
+      "description": "Read one accessible project with prototype bindings, members, and checkout status.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_change_handoff",
+      "description": "Create a lightweight Fuxi collaboration task for one project prototype. Returns a one-time handoff prompt; it does not change the current prototype.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "prototypeId",
+          "requirement"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "prototypeId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "versionStrategyType": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "custom"
+            ]
+          },
+          "versionStrategyValue": {
+            "type": "string",
+            "description": "Required for custom strategy; a higher SemVer."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_prototype_change",
+      "description": "Create a standalone prototype AI change. It is unavailable once the prototype belongs to a project; the generated code is valid for ten minutes and does not change the current version.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "requirement"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "versionStrategyType": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "custom"
+            ]
+          },
+          "versionStrategyValue": {
+            "type": "string",
+            "description": "Required when versionStrategyType is custom; a higher SemVer."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "redeem_prototype_change_handoff",
+      "description": "Redeem a one-time standalone prototype change code and read the locked base version and source download path.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "handoffCode"
+        ],
+        "properties": {
+          "handoffCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_prototype_change_status",
+      "description": "Read a standalone prototype change, including preview status, version strategy, and final version.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "changeId"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "changeId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "submit_prototype_change",
+      "description": "Upload a validated ZIP for a redeemed standalone prototype change. The Fuxi page runs browser preview and then forms the formal version automatically; it never bypasses the base-version check.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "changeId",
+          "zipPath"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "changeId": {
+            "type": "string"
+          },
+          "zipPath": {
+            "type": "string"
+          },
+          "versionType": {
+            "type": "string",
+            "enum": [
+              "major",
+              "minor",
+              "patch"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "redeem_change_handoff",
+      "description": "Redeem a one-time lightweight collaboration task code and read the authoritative base version and source download path.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "handoffCode"
+        ],
+        "properties": {
+          "handoffCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_change_status",
+      "description": "Read one lightweight collaboration change, including its base/current version, candidate status, and preview path.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "changeId"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "changeId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "submit_change_candidate",
+      "description": "Validate and upload a ZIP as a reviewable candidate for a redeemed task. This never changes the current prototype; a project owner/admin must adopt it in Fuxi.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "changeId",
+          "zipPath"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "changeId": {
+            "type": "string"
+          },
+          "zipPath": {
+            "type": "string"
+          },
+          "versionType": {
+            "type": "string",
+            "enum": [
+              "major",
+              "minor",
+              "patch"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "bind_prototype_to_project",
+      "description": "Bind an existing prototype into a project menu as a new project-prototype entry.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "prototypeId",
+          "menuPath"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "prototypeId": {
+            "type": "string"
+          },
+          "menuPath": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "checkout_prototype",
+      "description": "Check out a bound project prototype for exclusive editing.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "projectPrototypeId"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "projectPrototypeId": {
+            "type": "number"
+          },
+          "note": {
+            "type": "string"
+          },
+          "durationHours": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "checkin_prototype",
+      "description": "Check in a project prototype that the current user checked out.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "projectPrototypeId"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "projectPrototypeId": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_snapshot",
+      "description": "Create a named project snapshot of menu configuration and bound prototype versions.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "name"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "versionLabel": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "restore_snapshot",
+      "description": "Restore a project snapshot. Requires explicit confirm: true and a production backup gate.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "snapshotId",
+          "confirm"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "snapshotId": {
+            "type": "number"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "delete_prototype",
+      "description": "Move a prototype to the recycle bin. Requires explicit confirm: true.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "confirm"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "rollback_version",
+      "description": "Roll a prototype back to a previous version. Requires explicit confirm: true and a backup gate for production.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "versionId",
+          "confirm"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "force_release_checkout",
+      "description": "Force-release a checked-out project prototype. Owner/admin only; requires explicit confirm: true.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectId",
+          "projectPrototypeId",
+          "confirm"
+        ],
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "projectPrototypeId": {
+            "type": "number"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "validate_project",
+      "description": "Validate a local project directory for Fuxi upload compatibility without modifying it.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectPath"
+        ],
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "validate_zip",
+      "description": "Inspect an existing ZIP file for Fuxi upload compatibility.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "zipPath"
+        ],
+        "properties": {
+          "zipPath": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "pack_project",
+      "description": "Create a Fuxi-compatible ZIP from a built project directory.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "projectPath",
+          "outputZipPath"
+        ],
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "outputZipPath": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deliver_project",
+      "description": "Safely create or update one Fuxi prototype with idempotency, optimistic version checks, optional project checkout protection, and mandatory readback.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "mode",
+          "idempotencyKey",
+          "zipPath",
+          "versionNote"
+        ],
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "project-bound-update"
+            ]
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 8
+          },
+          "zipPath": {
+            "type": "string"
+          },
+          "versionNote": {
+            "type": "string"
+          },
+          "versionType": {
+            "type": "string",
+            "enum": [
+              "major",
+              "minor",
+              "patch"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prototypeId": {
+            "type": "string"
+          },
+          "expectedVersion": {
+            "type": "number"
+          },
+          "expectedEntryFile": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "projectPrototypeId": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "upload_project",
+      "description": "Validate a ZIP then upload it to an explicit prototype as a new version.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "prototypeId",
+          "zipPath",
+          "versionNote"
+        ],
+        "properties": {
+          "prototypeId": {
+            "type": "string"
+          },
+          "zipPath": {
+            "type": "string"
+          },
+          "versionNote": {
+            "type": "string"
+          },
+          "versionType": {
+            "type": "string",
+            "enum": [
+              "major",
+              "minor",
+              "patch"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  ]
+}

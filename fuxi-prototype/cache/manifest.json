@@ -1,0 +1,28 @@
+{
+  "schema": "fuxi-prototype-capability-cache/2",
+  "skill": "fuxi-prototype",
+  "updatedAt": "2026-09-02T12:48:44.111Z",
+  "mcpTools": {
+    "hash": "b6602ea5aa4f088e8e93300a7017489109e300ae179e478045d0fb5225c0f9cb"
+  },
+  "files": {
+    "SKILL.md": "c53f4b5489c8851d6917281b53549e98714ad395aa8483278299937e1b4d760a",
+    "references/workflow-contract.md": "68b7de9a99ac6ae87ae50e314980e4e08bc23da53647a6376ec245a825adef3e",
+    "references/prototype-spec.md": "f96d20bbd8d4e7e3347de0c3521910e90419161e4f679091422c67d621d0b1f7",
+    "references/tiangong-visual-language.md": "47b958ab0c77875c3eb7a13b69f6e014295ae1befc986ef4971cc7ab52f4f062",
+    "references/skyui-runtime.md": "e8265f690176cb932ff5fd1e7584fce2c8ebcb912521a9b29c5000d88f48591d",
+    "references/fuxi-adapter.md": "fa2efc71332105274c1643f888cd40f278b970f3950e4eadf0b1b8e34250502f",
+    "specs/tiangong/SKILL.md": "968c4cee24f085732616d753879658751e2d56d00f6a23023db1d93691691341",
+    "specs/tiangong/manifest.json": "a217477259207c7a87540928cd27b3a947777a3c7b3cd74c4a9f871b1450b614",
+    "specs/static-html/SKILL.md": "dce79dc64eb82b10a8d3062da059f42af6973d262352caa5a8a3c9e1cbf06b58",
+    "specs/static-html/manifest.json": "39a3df4b2595edca0c109cf0eea26f56703ba716885210a85ca466771e4f1ac0",
+    "cache/template-contract.md": "17c548d1b46f3f5e87c41e466e899d4b38fb6a278ae1aac01367cd8d4f2b0d7f",
+    "scripts/build-capability-cache.cjs": "07f3d2925c305d7cd4a5eaa28c5bbb7225af3a96ec221971f14af023ca4ea1ef",
+    "scripts/profile-selection.cjs": "e4c128dd5364edce536828eef9bcae2284ce843ba429ca03dc5835eff7d4d984",
+    "scripts/run-state.cjs": "c227f20fd4326078426c015dbdb8fac1ff68395fb90c6bc698fbd782b7d16ce0",
+    "scripts/write-gate.cjs": "820a821abd63e272142406d9d7f65afb56f2a46aacce22e7e1e66bdff6649bcb",
+    "scripts/behavior-harness.cjs": "bcb4fb2c336da89ec250c3206188fc2ae332d030561bb0dfb06cd65171f8f0eb",
+    "scripts/quality-gate.cjs": "b9405ad5917443d8ff9ed8442ef2f975cf1da2f78a656e609d179bfc51c8d82a",
+    "scripts/run-golden-samples.cjs": "d9c958a7093fd26f9840fd8c26de1373cabb2e3f729812c977a413fb7e20445c"
+  }
+}

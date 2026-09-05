@@ -1,0 +1,29 @@
+{
+  "schema": "fuxi-prototype-golden-samples/1",
+  "samples": [
+    {
+      "id": "vue3-element-plus-alignment",
+      "projectDir": "vue3-element-plus-alignment",
+      "spec": "tiangong",
+      "profile": "vue3-element-plus",
+      "mode": "alignment",
+      "capabilityReads": []
+    },
+    {
+      "id": "vue3-skyui-implementation-proof",
+      "projectDir": "vue3-skyui-implementation-proof",
+      "spec": "tiangong",
+      "profile": "vue3-skyui",
+      "mode": "implementation-proof",
+      "capabilityReads": ["skyui-runtime"]
+    },
+    {
+      "id": "static-html-alignment",
+      "projectDir": "static-html-alignment",
+      "spec": "static-html",
+      "profile": null,
+      "mode": "alignment",
+      "capabilityReads": []
+    }
+  ]
+}

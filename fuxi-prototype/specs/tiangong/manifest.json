@@ -1,0 +1,8 @@
+{
+  "name": "tiangong",
+  "supportedRuntimes": ["vite-vue3"],
+  "preferredRuntime": "vite-vue3",
+  "supportedProfiles": ["vue3-element-plus", "vue3-skyui"],
+  "preferredProfile": "vue3-element-plus",
+  "requires": ["fuxi-adapter"]
+}

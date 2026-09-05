@@ -1,0 +1,18 @@
+{
+  "name": "fuxi-golden-skyui-implementation-proof",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "@sky/sky-ui": "2.2.44",
+    "vue": "3.5.41"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "4.6.2",
+    "typescript": "5.9.3",
+    "vite": "5.4.21",
+    "vue-tsc": "2.2.12"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "fuxi-golden-element-plus-alignment",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "element-plus": "2.11.8",
+    "vue": "3.5.41"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "4.6.2",
+    "vite": "5.4.21"
+  }
+}

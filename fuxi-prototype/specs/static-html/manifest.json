@@ -1,0 +1,7 @@
+{
+  "name": "static-html",
+  "supportedRuntimes": ["static-html"],
+  "preferredRuntime": "static-html",
+  "supportedProfiles": [],
+  "requires": ["fuxi-adapter"]
+}
